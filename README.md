@@ -9,7 +9,7 @@ ansible "host_name or group name" -m ping -i inventory.yaml
 
 ## Command to manage packages with the yum package manager
 
-### This command is an example for "httpd" package 
+### These commands are an example for "httpd" package 
 
 Installing the package with root privilege 
 
