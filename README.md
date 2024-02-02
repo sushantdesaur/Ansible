@@ -20,5 +20,5 @@ ansible "host_name or group name" -m ansible.builtin.yum -a "name=httpd state=pr
 Uninstalling the package with root privilege
 
 ```
-ansible "host_name or group name" -m ansible.builtin.yum -a "name=httpd state=present" -i inventory.yaml --become
+ansible "host_name or group name" -m ansible.builtin.yum -a "name=httpd state=absent" -i inventory.yaml --become
 ```
