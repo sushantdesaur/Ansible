@@ -22,3 +22,15 @@ Uninstalling the package with root privilege
 ```
 ansible "host_name or group name" -m ansible.builtin.yum -a "name=httpd state=absent" -i inventory.yaml --become
 ```
+
+Starting and enabling the httpd service with root privilege  
+```
+ansible "host_name or group name" -m ansible.builtin.service -a "name=httpd state=started enabled=yes" -i inventory.yaml --become
+```
+
+Copying files  
+```
+ansible "host_name or group name" -m ansible.builtin.copy -a "src=filename.extension dest=/var/www/html/file.extension" -i inventory.yaml --become
+```
+
+
