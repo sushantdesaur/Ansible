@@ -1,6 +1,8 @@
 # Ansible Guide 
 
 
+# Ad-hoc commands
+
 ## Command to ping servers from control machine 
 
 ```
