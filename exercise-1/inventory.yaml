@@ -1,6 +1,0 @@
-all:
-  hosts:
-    web01:
-      ansible_host: 172.31.34.183 # Add private IP if you are using cloud servers for control machine and servers 
-      ansible_user: user # username is "ubuntu" for ubuntu os and "ec2-user" for CentOS etc.
-      ansible_ssh_private_key_file: key.pem # name of the key file
