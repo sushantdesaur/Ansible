@@ -21,4 +21,10 @@
     - name: Install mariadb-server
       ansible.builtin.yum: 
         name: mariadb-server
-        state: present 
+        state: present
+    - name: Start mariadb-service
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+        enabled: yes
+          

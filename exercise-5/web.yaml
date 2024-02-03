@@ -1,0 +1,21 @@
+---
+- name: Web server setup
+  hosts: webservers
+  become: yes # execute with root privilege 
+  tasks:
+    - name: Install httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+    
+    - name: Start service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        backup: true
