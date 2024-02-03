@@ -3,9 +3,9 @@
   hosts: db_servers
   become: yes 
   vars: 
-    db_name: electric
-    db_user: current
-    db_pass: tesla
+    # db_name: electric
+    # db_user: current
+    # db_pass: tesla
   tasks:
     - debug:
         msg: "The db name is {{db_name}}"

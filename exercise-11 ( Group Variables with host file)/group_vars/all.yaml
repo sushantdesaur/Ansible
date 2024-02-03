@@ -1,0 +1,2 @@
+username: common_user
+comment: variable from group_vars/all.yaml file 

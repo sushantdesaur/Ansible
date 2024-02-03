@@ -1,0 +1,15 @@
+- name: Understanding variables
+  hosts: all
+  become: yes
+  # vars:
+    # username: play_user
+    # comment: variable from playbook
+  tasks:
+    - name: create user
+      ansible.builtin.user:
+        name: "{{username}}"
+        comment: "{{comment}}"
+      register: user_out
+
+    - debug:
+        var: user_out
