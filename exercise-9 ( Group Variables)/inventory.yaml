@@ -1,0 +1,24 @@
+all:
+  hosts:
+    web01:
+      ansible_host: 172.31.34.183
+    web02:
+      ansible_host: 172.31.33.80
+    db01:
+      ansible_host: 172.31.40.202
+
+  children:
+    web_servers:
+      hosts:
+        web01:
+        web02:
+    db_servers:
+      hosts:
+        db01:
+    dc_oregon:
+      children:
+        web_servers: 
+        db_servers:
+      vars:
+        ansible_user: ec2-user
+        ansible_ssh_private_key_file: key.pem

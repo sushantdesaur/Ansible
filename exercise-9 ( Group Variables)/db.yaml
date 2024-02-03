@@ -1,0 +1,47 @@
+---
+- name: DB server setup
+  hosts: db_servers
+  become: yes 
+  vars: 
+    db_name: electric
+    db_user: current
+    db_pass: tesla
+  tasks:
+    - debug:
+        msg: "The db name is {{db_name}}"
+    - debug:
+        var: db_user
+    - name: Install mariadb-server
+      ansible.builtin.yum: 
+        name: mariadb-server
+        state: present
+
+    - name: Install pymysql
+      ansible.builtin.yum: 
+        name: python3-PyMySQL
+        state: present
+
+    - name: Start mariadb-service
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Create a new database 
+      community.mysql.mysql_db:
+        name: "{{db_name}}"
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
+
+    - name: Create database user and password
+      community.mysql.mysql_user:
+        name: "{{db_user}}"
+        password: "{{db_pass}}"
+        priv: '*.*:ALL'
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
+      register: db_out
+
+    - name: Print db_out variable
+      debug:
+        var: "db_out"
