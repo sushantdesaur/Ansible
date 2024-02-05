@@ -50,5 +50,10 @@ Doing a dry run before actually applying the changes
 ```
 ansible-playbook -i inventory.yaml web-db.yaml -C
 ```
+Gathers facts about remote hosts
+
+```
+ansible -m setup host_name
+```
 
 

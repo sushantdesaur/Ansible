@@ -1,0 +1,85 @@
+---
+- name: Provisioning Servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install multiple packages using loop on CentOS 
+      yum: 
+        name: "{{item}}" 
+        state: present
+      when: ansible_distribution == "CentOS"
+      loop:
+        - chrony
+        - wget
+        - git 
+        - zip
+        - unzip
+    
+    - name: Install multiple packages using loop on ubuntu
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - ntp
+        - wget
+        - git 
+        - zip
+        - unzip
+
+    - name: Start the service on CentOS 
+      service: 
+        name: chronyd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: Start the service on Ubuntu 
+      service: 
+        name: ntp
+        state: started
+        enabled: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Banner file
+      copy:
+        content: 'This server is managed by ansible. No manual changes please.'
+        dest: /etc/motd
+
+    - name: Deploy ntp agent configuration on CentOS
+      template:
+        src: templates/ntpconf_centos.conf
+        dest: /etc/chrony.conf
+        backup: true
+      when: ansible_distribution == "CentOS"
+    
+    - name: Deploy ntp agent configuration on Ubuntu
+      template:
+        src: templates/ntpconf_ubuntu.conf
+        dest: /etc/ntp.conf
+        backup: true
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Restart the service on CentOS 
+      service: 
+        name: chronyd
+        state: restarted
+        enabled: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: Restart the service on Ubuntu 
+      service: 
+        name: ntp
+        state: restarted
+        enabled: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Create a folder 
+      file:
+        path: /opt/test21
+        state: directory
+
+
+
+

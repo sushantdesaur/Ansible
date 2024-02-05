@@ -1,0 +1,46 @@
+---
+- name: Provisioning Servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install multiple packages using loop on CentOS 
+      yum: 
+        name: "{{item}}" 
+        state: present
+      when: ansible_distribution == "CentOS"
+      loop:
+        - chrony
+        - wget
+        - git 
+        - zip
+        - unzip
+    
+    - name: Install multiple packages using loop on ubuntu
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - ntp
+        - wget
+        - git 
+        - zip
+        - unzip
+
+    - name: Start the service on CentOS 
+      service: 
+        name: chronyd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: Start the service on Ubuntu 
+      service: 
+        name: ntp
+        state: started
+        enabled: yes
+      when: ansible_distribution == "Ubuntu"
+
+
+
