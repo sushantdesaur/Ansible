@@ -1,0 +1,19 @@
+- hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Create new ec2 key pair
+      ec2_key:
+        name: sample
+        region: us-east-1 # Set region like ap-south-1
+      register: key_out
+
+    # - name: Print key
+    #   debug:
+    #     var: key_out
+
+    - name: Save key
+      copy:
+        content: "{{key_out.key.private_key}}"
+        dest: ./sample.pem
+      when: key_out.changed    
+
